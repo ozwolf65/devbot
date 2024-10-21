@@ -2,8 +2,8 @@ import './App.css'
 import { Button, Input } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import {base_url} from "./const.ts";
 
-const queue_url = "URL_HERE"
 
 function App() {
     const [queue, setqueue] = useState([] as string[])
@@ -14,6 +14,7 @@ function App() {
             setqueue(queue)
         })
     }, [])
+
     return (
         <>
             <div style={{ paddingTop: "20px", paddingLeft: "20px" }}>
@@ -77,7 +78,7 @@ function QueueList({ queue, setqueue }: { queue: string[], setqueue: React.Dispa
 
 // get the queue from the API
 async function getQueue(): Promise<string[]> {
-    const queueData = await axios.get<string[]>(queue_url)
+    const queueData = await axios.get<string[]>(base_url+"/queue")
     if (queueData.data != null) {
         return queueData.data
     }
@@ -86,7 +87,7 @@ async function getQueue(): Promise<string[]> {
 
 // Delete a name from the queue. Works on the assumption a name can only be in the queue once
 async function deleteName(name: string): Promise<string[]> {
-    const queueData = await axios.delete<string[]>(queue_url + `/${name}`)
+    const queueData = await axios.delete<string[]>(base_url+`/queue/${name}`)
     if (queueData.data != null) {
         return queueData.data
     }
@@ -96,7 +97,7 @@ async function deleteName(name: string): Promise<string[]> {
 // submitName adds a name to the queuee, and then ret urns the updated queue.
 async function submitName(name?: string): Promise<string[]> {
     if (name) {
-        const queueData = await axios.post<string[]>(queue_url, { "name": name })
+        const queueData = await axios.post<string[]>(base_url+"/queue", { "name": name })
         if (queueData.data != null) {
             return queueData.data
         }
