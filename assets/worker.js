@@ -1,11 +1,11 @@
-import {base_url} from "./const.ts";
+import {own_url} from "../src/const.ts";
 
-self.addEventListener('push', function (event: PushEvent) {
+self.addEventListener('push', function (event) {
     console.log('[Service Worker] Push Received.');
     // body expects at least a change and name field
-    const body = JSON.parse(event.data!.text())
+    const body = JSON.parse(event.data.text())
     const title = 'DevBot';
-    let text: string;
+    let text;
     switch (body.change) {
         case "add":
             text = `Added ${body.name} to the queue`
@@ -24,9 +24,9 @@ self.addEventListener('push', function (event: PushEvent) {
     event.waitUntil(self.registration.showNotification(title,options));
 });
 
-self.addEventListener('notificationclick', function(event: NotificationEvent) {
+self.addEventListener('notificationclick', function(event) {
     event.notification.close();
     event.waitUntil(
-        clients.openWindow(base_url)
+        clients.openWindow(own_url)
     );
 });

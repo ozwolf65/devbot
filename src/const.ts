@@ -1,1 +1,2 @@
-export const base_url = "URL_HERE"
+export const base_url = "http://localhost:8000";
+export const own_url="http://localhost:8080";

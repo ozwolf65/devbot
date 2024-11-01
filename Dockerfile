@@ -10,5 +10,5 @@ RUN npm install --silent
 
 COPY . .
 RUN npm run build
-EXPOSE 8080
+EXPOSE $PORT
 CMD [ "npm", "run", "preview" ]

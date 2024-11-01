@@ -1,8 +1,8 @@
 import axios from "axios";
-import {base_url} from "./const.ts";
+import {base_url} from "../src/const.ts";
 
 const applicationServerPublicKey = "KEY_HERE";
-let swRegistration: ServiceWorkerRegistration;
+
 
 // used to convert the server public key to a Uint8Array for subscribing
 function urlB64ToUint8Array(base64String: String) {
@@ -23,15 +23,14 @@ function urlB64ToUint8Array(base64String: String) {
 
 function regWorker() {
     if ("serviceWorker" in navigator && 'PushManager' in window) {
-        navigator.serviceWorker.register("./src/worker.ts")
+        navigator.serviceWorker.register("/assets/worker.js", {type: "module"})
             .then(function (swReg) {
-                swRegistration = swReg;
-                console.log("successfully registered worker")
-                subscribeUser()
+                console.log("Successfully registered worker")
+                subscribeUser(swReg)
             })
 
             .catch(function (error) {
-                console.error("Service worker error", error)
+                console.error("Service worker error: ", error)
             });
 
     } else {
@@ -51,23 +50,25 @@ function updateServerSubscription(sub: PushSubscription) {
     }
 }
 
-function subscribeUser() {
-    if (!swRegistration) {
+function subscribeUser(reg: ServiceWorkerRegistration) {
+    if (!reg) {
         console.error("no registration")
         return
     }
     const applicationKey = urlB64ToUint8Array(applicationServerPublicKey)
-    swRegistration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: applicationKey
-    })
-        .then((sub) => {
-            updateServerSubscription(sub)
-
-        }
-        )
-        .catch(function (err: Error) {
-            console.error("Failed to sub user: ", err)
+    navigator.serviceWorker.ready.then(() => {
+        reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: applicationKey
         })
+            .then((sub) => {
+                console.log("updating server")
+                updateServerSubscription(sub)
+            })
+            .catch(function (err: Error) {
+                console.error("Failed to sub user: ", err)
+            })
+    })
+
 }
 regWorker()
