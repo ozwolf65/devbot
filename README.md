@@ -15,6 +15,6 @@ The queue is managed by an API, and sends notifications to users when updated by
 A template for a python API implementation of this can be found [here](https://github.com/ozwolf65/devbotAPI)
 
 ## Get Started
-Clone the repo and change `base_url` in `src/const.ts` to the url of your API.
+Clone the repo and change `src/const.ts`, setting `base_url` to the url of your API and `own_url` to the url of the frontend site.
 A public key also needs providing in `assets/notifications.ts` to match the key for your chosen web push service
 Then build the Dockerfile and deploy to your chosen environment.
