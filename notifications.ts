@@ -1,5 +1,5 @@
 import axios from "axios";
-import {base_url} from "../src/const.ts";
+import {base_url} from "./src/const.ts";
 
 const applicationServerPublicKey = "KEY_HERE";
 
@@ -23,7 +23,7 @@ function urlB64ToUint8Array(base64String: String) {
 
 function regWorker() {
     if ("serviceWorker" in navigator && 'PushManager' in window) {
-        navigator.serviceWorker.register("/assets/worker.js", {type: "module"})
+        navigator.serviceWorker.register("/worker.js", {type: "module"})
             .then(function (swReg) {
                 console.log("Successfully registered worker")
                 subscribeUser(swReg)
@@ -57,6 +57,7 @@ function subscribeUser(reg: ServiceWorkerRegistration) {
     }
     const applicationKey = urlB64ToUint8Array(applicationServerPublicKey)
     navigator.serviceWorker.ready.then(() => {
+        console.log("worker ready")
         reg.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: applicationKey

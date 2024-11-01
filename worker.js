@@ -1,4 +1,4 @@
-import {own_url} from "../src/const.ts";
+import {own_url} from "./src/const.ts";
 
 self.addEventListener('push', function (event) {
     console.log('[Service Worker] Push Received.');

@@ -11,18 +11,18 @@ export default defineConfig({
     rollupOptions: {
       input: {
         app: './index.html',
-        'service-worker': './assets/worker.js'
+        'service-worker': './worker.js'
       },
       output: {
         entryFileNames: assetInfo => {
-          return assetInfo.name === 'service-worker' ? 'assets/worker.js' : 'assets/[name].[hash].js'
+          return assetInfo.name === 'service-worker' ? 'worker.js' : 'assets/[name].[hash].js'
         }
       }
 
     }
   },
   preview: {
-    port: 8080,
+    port: 3000,
     strictPort: true,
     host: true,
   },
@@ -30,7 +30,7 @@ export default defineConfig({
     watch:{
       usePolling: true
     },
-    port: 8080,
+    port: 3000,
     strictPort: true,
     host: true,
   },
