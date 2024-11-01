@@ -45,8 +45,6 @@ function updateServerSubscription(sub: PushSubscription) {
             .catch((err) =>
             console.error("err while posting sub: ",err)
         )
-        console.log(JSON.stringify(sub))
-
     }
 }
 
