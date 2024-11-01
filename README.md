@@ -16,5 +16,5 @@ A template for a python API implementation of this can be found [here](https://g
 
 ## Get Started
 Clone the repo and change `src/const.ts`, setting `base_url` to the url of your API and `own_url` to the url of the frontend site.
-A public key also needs providing in `assets/notifications.ts` to match the key for your chosen web push service
+A public key also needs providing in `assets/notifications.ts` to match the key for your chosen web push service.
 Then build the Dockerfile and deploy to your chosen environment.
